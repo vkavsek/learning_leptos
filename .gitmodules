@@ -1,0 +1,6 @@
+[submodule "01_basic_structure"]
+	path = 01_basic_structure
+	url = ./01_basic_structure/
+[submodule "02_basic_ui"]
+	path = 02_basic_ui
+	url = ./02_basic_ui/
