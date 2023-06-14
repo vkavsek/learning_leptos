@@ -4,6 +4,7 @@ fn main() {
     mount_to_body(|cx| {
         view! { cx,
             <ProgrA initial_value=0/>
+            <ProgrB/>
             <Dyn/>
         }
     })
@@ -67,11 +68,13 @@ fn ProgrB(cx: Scope) -> impl IntoView {
     // .into() converts ReadSignal to Signal
     // or use Signal::derive() to wrap a derived signal
     view! { cx,
-        <button on:click=move |_| {
-            set_count.update(|n| *n += 1);
-        }>"Click me"</button>
-        <ProgressBarB progress=count/>
-        <ProgressBarB progress=Signal::derive(cx, double_count)/>
+        <div style="display: grid">
+            <button on:click=move |_| {
+                set_count.update(|n| *n += 1);
+            }>"Click me"</button>
+            <ProgressBarB progress=count/>
+            <ProgressBarB progress=Signal::derive(cx, double_count)/>
+        </div>
     }
 }
 
@@ -92,8 +95,8 @@ pub fn Dyn(cx: Scope) -> impl IntoView {
         <button on:click=decr_y>"-y"</button>
         <div
             style="position: absolute"
-            style:left=move || format!("{}px", x() + 100)
-            style:top=move || format!("{}px", y() + 100)
+            style:left=move || format!("{}px", x() + 200)
+            style:top=move || format!("{}px", y() + 200)
             style:background-color=move || format!("rgb({}, {}, 100)", x(), y())
             style=("--columns", x)
         >
