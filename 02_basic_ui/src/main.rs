@@ -98,6 +98,7 @@ pub fn Dyn(cx: Scope) -> impl IntoView {
             style:left=move || format!("{}px", x() + 200)
             style:top=move || format!("{}px", y() + 200)
             style:background-color=move || format!("rgb({}, {}, 100)", x(), y())
+            // is this needed? what does it do?
             style=("--columns", x)
         >
             "Moves when coords. change"
