@@ -10,7 +10,7 @@ fn main() {
 /// So how do you take a list of data and render it in the DOM?
 /// This example will show you the two ways:
 /// 1) for mostly-static lists, using Rust iterators
-/// 2) for lists that grow, shrink, or move items, using <For/>
+/// 2) for lists that grow, shrink, or move items, using ```<For/>```
 #[component]
 fn App(cx: Scope) -> impl IntoView {
     let val = vec![1, 2, 3, 4, 5];
@@ -29,7 +29,7 @@ fn App(cx: Scope) -> impl IntoView {
 }
 
 /// Shows how to use vectors to render static lists, also demonstrates the use of collect_view() helper method
-/// that allows you to collect any iterator of `T: IntoView` into `Vec<View>` otherwise you would have to use 
+/// that allows you to collect any iterator of ```T: IntoView``` into ```Vec<View>``` otherwise you would have to use 
 /// turbofish syntax with collect() method, this is demonstrated in the StaticList component.
 #[component]
 fn StItems<IV>(cx: Scope, val: Vec<IV>) -> impl IntoView
