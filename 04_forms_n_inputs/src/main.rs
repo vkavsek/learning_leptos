@@ -24,7 +24,7 @@ fn ContInput(cx: Scope) -> impl IntoView {
             on:input=move |ev| { set_name(event_target_value(&ev)) }
             prop:value=name
         />
-        <p>"Name is: " {name}</p>
+        <p>"Ime je: " {name}</p>
     }
 }
 
