@@ -1,9 +1,7 @@
 use leptos::*;
 
 fn main() {
-    mount_to_body(|cx| view! { cx,
-        <App/>
-    })
+    mount_to_body(|cx| view! { cx, <App/> })
 }
 
 /// Iteration is a very common task in most applications.
@@ -18,13 +16,13 @@ fn App(cx: Scope) -> impl IntoView {
         <h1>"Iteration"</h1>
         <h2>"Static Items and Static List"</h2>
         <p>"Everything is static"</p>
-        <StItems val/> 
+        <StaticItems val/>
         <h2>"Static List"</h2>
         <p>"Use this pattern if the list itself is static."</p>
         <StaticList length=5/>
         <h2>"Dynamic List"</h2>
         <p>"Use this pattern if the rows in your list will change."</p>
-        <DynamicList initial_length=5/>
+        <DynamicList initial_length=50/>
     }
 }
 
@@ -32,7 +30,7 @@ fn App(cx: Scope) -> impl IntoView {
 /// that allows you to collect any iterator of ```T: IntoView``` into ```Vec<View>``` otherwise you would have to use 
 /// turbofish syntax with collect() method, this is demonstrated in the StaticList component.
 #[component]
-fn StItems<IV>(cx: Scope, val: Vec<IV>) -> impl IntoView
+fn StaticItems<IV>(cx: Scope, val: Vec<IV>) -> impl IntoView
 where
     IV: IntoView + Clone,
 {
@@ -68,11 +66,7 @@ fn StaticList(
         .map(|(count, set_count)| {
             view! { cx,
                 <li>
-                    <button
-                        on:click=move |_| set_count.update(|n| *n += 1)
-                    >
-                        {count}
-                    </button>
+                    <button on:click=move |_| set_count.update(|n| *n += 1)>{count}</button>
                 </li>
             }
         })
@@ -81,9 +75,7 @@ fn StaticList(
     // Note that if `counter_buttons` were a reactive list
     // and its value changed, this would be very inefficient:
     // it would rerender every row every time the list changed.
-    view! { cx,
-        <ul>{counter_buttons}</ul>
-    }
+    view! { cx, <ul>{counter_buttons}</ul> }
 }
 
 /// A list of counters that allows you to add or
@@ -128,44 +120,36 @@ fn DynamicList(
         // increment the ID so it's always unique
         next_counter_id += 1;
     };
+    
 
+    // The <For/> component is central here
+    // This allows for efficient, key list rendering
+    //
+    // `each` takes any function that returns an iterator
+    // this should usually be a signal or derived signal
+    // if it's not reactive, just render a Vec<_> instead of <For/>
+    //
+    // the key should be unique and stable for each row
+    // using an index is usually a bad idea, unless your list
+    // can only grow, because moving items around inside the list
+    // means their indices will change and they will all rerender
+    // the view function receives each item from your `each` iterator
+    // and returns a view
     view! { cx,
         <div>
-            <button on:click=add_counter>
-                "Add Counter"
-            </button>
+            <button on:click=add_counter>"Add Counter"</button>
             <ul>
-                // The <For/> component is central here
-                // This allows for efficient, key list rendering
                 <For
-                    // `each` takes any function that returns an iterator
-                    // this should usually be a signal or derived signal
-                    // if it's not reactive, just render a Vec<_> instead of <For/>
                     each=counters
-                    // the key should be unique and stable for each row
-                    // using an index is usually a bad idea, unless your list
-                    // can only grow, because moving items around inside the list
-                    // means their indices will change and they will all rerender
                     key=|counter| counter.0
-                    // the view function receives each item from your `each` iterator
-                    // and returns a view
                     view=move |cx, (id, (count, set_count))| {
                         view! { cx,
                             <li>
-                                <button
-                                    on:click=move |_| set_count.update(|n| *n += 1)
-                                >
-                                    {count}
-                                </button>
-                                <button
-                                    on:click=move |_| {
-                                        set_counters.update(|counters| {
-                                            counters.retain(|(counter_id, _)| counter_id != &id)
-                                        });
-                                    }
-                                >
-                                    "Remove"
-                                </button>
+                                <button on:click=move |_| set_count.update(|n| *n += 1)>{count}</button>
+                                <button on:click=move |_| {
+                                    set_counters
+                                        .update(|counters| { counters.retain(|(counter_id, _)| counter_id != &id) });
+                                }>"Remove"</button>
                             </li>
                         }
                     }
