@@ -20,9 +20,11 @@ fn App(cx: Scope) -> impl IntoView {
     view! { cx, <div>{paragraphs}</div> }
 }
 
-/// An if expression returns its value, and a &str implements IntoView, so a Fn() -> &str implements IntoView, so this... just works!
+/// This example shows that you can use an if block inside a Html Element. To control the flow of the program.
+/// An 'if' expression returns its value, and a &str implements IntoView, so a Fn() -> &str implements IntoView, so this... just works!
 /// Always remember: to be reactive, values must be functions.
-/// Note the syntax for `is_odd` closure : `{ move || if is_odd() { "Odd" } else { "Even" }}`
+/// Note the syntax for 'is_odd' closure, and the syntax inside the paragraph in the view:
+/// `{ move || if is_odd() { "Odd" } else { "Even" }}`
 #[component]
 fn IfControl(cx: Scope, value: ReadSignal<i32>) -> impl IntoView {
     let is_odd = move || value() & 1 == 1;
