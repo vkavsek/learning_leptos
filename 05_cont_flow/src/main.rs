@@ -1,0 +1,4 @@
+use leptos::*;
+
+fn main() {
+}
