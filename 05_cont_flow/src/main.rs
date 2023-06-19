@@ -31,6 +31,7 @@ fn App(cx: Scope) -> impl IntoView {
                     </div>
                     <div>{paragraphs}</div>
                 </div>
+                <hr/>
                 <div>
                     <LeptosBookExample/>
                 </div>
