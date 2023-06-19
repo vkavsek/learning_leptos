@@ -59,7 +59,7 @@ fn BookExample(cx: Scope) -> impl IntoView {
                         // we can render a list of errors
                         // as strings, if we'd like
                         <ul>
-                            {move || errors.get()
+                            {move || errors()
                                 .into_iter()
                                 .map(|(_, e)| view! { cx, <li>{e.to_string()}</li>})
                                 .collect::<Vec<_>>()
