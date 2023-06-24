@@ -54,9 +54,8 @@ pub fn TakesChildren<F, IV>(
     /// Takes a function (type F) that returns anything that can be
     /// converted into a View (type IV)
     render_prop: F,
-    /// `children` takes the `Children` type
-    /// this is an alias for `Box<dyn FnOnce(Scope) -> Fragment>`
-    /// ... aren't you glad we named it `Children` instead?
+    /// `children` takes the `Children` type this is an alias for `Box<dyn FnOnce(Scope) -> Fragment>`
+    /// If you need a Fn or FnMut, ChildrenFn and ChildrenMut aliases are also provided
     children: Children,
 ) -> impl IntoView
 where
@@ -84,11 +83,11 @@ pub fn WrapsChildren(cx: Scope, children: Children) -> impl IntoView {
         .nodes
         .into_iter()
         .map(|child| view! { cx, <li>{child}</li> })
-        .collect::<Vec<_>>();
+        .collect_view(cx);
 
+    // wrap our wrapped children in a UL
     view! { cx,
         <h1><code>"<WrapsChildren/>"</code></h1>
-        // wrap our wrapped children in a UL
         <ul>{children}</ul>
     }
 }
