@@ -17,11 +17,45 @@ fn add_a_name(id: usize) -> String {
 fn App(cx: Scope) -> impl IntoView {
     view! { cx,
         <h1>"Demo"</h1>
+        <ReactivityNFunctions/>
         <MakeList/>
     }
 }
 
 #[component]
+fn ReactivityNFunctions(cx: Scope) -> impl IntoView {
+    // a signal holds a value, and can be updated
+    let (count, set_count) = create_signal(cx, 0);
+
+    // a derived signal is a function that accesses other signals
+    let _double_count = move || count() * 2;
+    let count_is_odd = move || count() & 1 == 1;
+    let text = move || if count_is_odd() { "odd" } else { "even" };
+
+    // an effect automatically tracks the signals it depends on
+    // and reruns when they change
+    create_effect(cx, move |_| {
+        log!("text = {}", text());
+    });
+
+    view! { cx,
+        <h3>"Reactivity and functions demo"</h3>
+        <p>{move || {
+            let mut full_text = String::new();
+            for i in 0..10 {
+                set_count(i);
+                full_text.push_str(&format!("{}\n", text().to_uppercase()));
+                }
+            full_text
+            }
+        }
+        </p>
+        <hr/>
+    }
+}
+
+#[component]
+#[rustfmt::skip]
 fn MakeList(cx: Scope) -> impl IntoView {
     let mut next_count_id = INITIAL_LIST_LENGTH;
     let list_elements: Vec<_> = (0..next_count_id)
@@ -48,6 +82,7 @@ fn MakeList(cx: Scope) -> impl IntoView {
     };
 
     view! { cx,
+        <h3>"Dynamic list practice"</h3>
         <div>
             <button on:click=push_names>"Add 20 names"</button>
             <ul>
@@ -57,13 +92,12 @@ fn MakeList(cx: Scope) -> impl IntoView {
                     view=move |cx, (id, ((n, set_n), (name, set_name)))| {
                         view! { cx,
                             <li>
-                                <button on:click=move |_| {
-                                    set_n
-                                        .update(|num| {
+                                <button on:click=move |_| { set_n.update(|num| {
                                             set_name(add_a_name(*num));
                                             *num += 1;
-                                        });
-                                }>"+1"</button>
+                                        }); }>
+                                "+1"
+                                </button>
                                 <button on:click=move |_| set_wrap_list_count.update(|elem| elem.retain(|(count_id, _)| count_id != &id))>
                                     "Remove"
                                 </button>
