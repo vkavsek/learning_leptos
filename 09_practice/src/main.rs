@@ -47,8 +47,6 @@ fn MakeList(cx: Scope) -> impl IntoView {
         });
     };
 
-    //let user_name = move |name| {};
-
     view! { cx,
         <div>
             <button on:click=push_names>"Add 20 names"</button>
