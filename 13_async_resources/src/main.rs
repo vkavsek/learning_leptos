@@ -49,21 +49,22 @@ fn App(cx: Scope) -> impl IntoView {
     let is_loading = move || if loading() { "Loading..." } else { "Idle." };
 
     view! { cx,
-        <button
-            on:click=move |_| {
-                set_count.update(|n| *n += 1);
-            }
-        >
-            "Click me"
-        </button>
+        <button on:click=move |_| {
+            set_count.update(|n| *n += 1);
+        }>"Click me"</button>
         <p>
-            <code>"stable"</code>": " {move || stable.read(cx)}
+            <code>"stable"</code>
+            ": "
+            {move || stable.read(cx)}
         </p>
         <p>
-            <code>"count"</code>": " {count}
+            <code>"count"</code>
+            ": "
+            {count}
         </p>
         <p>
-            <code>"async_value"</code>": "
+            <code>"async_value"</code>
+            ": "
             {async_result}
             <br/>
             {is_loading}
