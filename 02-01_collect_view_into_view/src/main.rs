@@ -1,5 +1,6 @@
 use leptos::{ev::SubmitEvent, html::Input, *};
 
+/// A demonstration of the use of into_view() and collect_view() functions. 
 #[component]
 fn App(cx: Scope) -> impl IntoView {
     let name_list = vec![
@@ -10,21 +11,26 @@ fn App(cx: Scope) -> impl IntoView {
     let names: Vec<_> = uppercase_conversion(&name_list);
 
     view! { cx,
+        <h2>
+            <code>"collect_view()"</code>
+            " Demo"
+        </h2>
         <CollectViewDemo names/>
+        <h2>
+            <code>"into_view()"</code>
+            " Demo"
+        </h2>
         <IntoViewDemo/>
     }
 }
 
+/// Here we demonstrate how to collect a vector of 'views' into a View, so that the whole vector can be rendered.
 #[component]
 fn CollectViewDemo<IV>(cx: Scope, names: Vec<IV>) -> impl IntoView
 where
     IV: IntoView,
 {
     view! { cx,
-        <h2>
-            <code>"collect_view()"</code>
-            " Demo"
-        </h2>
         <ul>
             {names
                 .into_iter()
@@ -36,16 +42,16 @@ where
     }
 }
 
+/// Here we demonstrate when the use of into_view() might be useful.
+/// We want to render the BrowserInputPractice component if the button is toggled ON and 
+/// nothing if the button is toggled OFF.
+/// We can achieve that by using the into_view() helper function.
 #[component]
 fn IntoViewDemo(cx: Scope) -> impl IntoView {
     let (toggle, set_toggle) = create_signal(cx, false);
 
     let click = move |_| set_toggle.update(|boolean| *boolean = !*boolean);
     view! { cx,
-        <h2>
-            <code>"into_view()"</code>
-            " Demo"
-        </h2>
         <button on:click=click>"Click to toggle browser input practice"</button>
         <p>"Button is toggled: " {move || if toggle() { "On" } else { "Off" }}</p>
         {
@@ -87,6 +93,8 @@ fn BrowserInputPractice(cx: Scope) -> impl IntoView {
         <p>"Which is: " {move || if is_odd() { "Odd" } else { "Even" }}</p>
     }
 }
+
+// ----------- Regular RUST ----------- //
 
 fn main() {
     mount_to_body(|cx| view! { cx, <App/> });
