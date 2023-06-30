@@ -10,9 +10,9 @@ fn main() {
     })
 }
 
-#[component]
 /// One way to use variables as props
 /// F: Fn() -> i32 + 'static
+#[component]
 fn ProgressBarA<F>(
     cx: Scope,
     /// Max value of the progress bar.
@@ -49,10 +49,10 @@ pub fn ProgrA(cx: Scope, initial_value: i32) -> impl IntoView {
     }
 }
 
-#[component]
 /// Another way to use variables as props
 /// `#[prop(into)] name: Signal<i32>`
 /// Note how you need to use Signal::derive() to wrap a derived signal
+#[component]
 fn ProgressBarB(
     cx: Scope,
     #[prop(default = 100)] max: u16,

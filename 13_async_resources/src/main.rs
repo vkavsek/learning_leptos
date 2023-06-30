@@ -3,7 +3,7 @@ use leptos::*;
 
 // Here we define an async function
 // This could be anything: a network request, database read, etc.
-// Here, we just multiply a number by 10
+// In this case we just multiply a number by 10
 async fn load_data(value: i32) -> i32 {
     // fake a one-second delay
     TimeoutFuture::new(1_000).await;
