@@ -10,11 +10,9 @@ use leptos::*;
 // 3. Creating a global state struct and creating lenses into it with `create_slice`
 //
 // Option #1: URL as Global State
-// The next few sections of the tutorial will be about the router.
-// So for now, we'll just look at options #2 and #3.
+// This will be explained in the next few chapters. Look for Router folder if you want that.
 
 // Option #2: Pass Signals through Context
-//
 // In virtual DOM libraries like React, using the Context API to manage global
 // state is a bad idea: because the entire app exists in a tree, changing
 // some value provided high up in the tree can cause the whole app to render.
@@ -23,6 +21,7 @@ use leptos::*;
 // You can create a signal in the root of your app and pass it down to other
 // components using provide_context(). Changing it will only cause rerendering
 // in the specific places it is actually used, not the whole app.
+
 #[component]
 fn Option2(cx: Scope) -> impl IntoView {
     // here we create a signal in the root that can be consumed
@@ -89,7 +88,7 @@ fn ListItems(cx: Scope) -> impl IntoView {
     let squares = move || {
         (0..count())
             .map(|n| view! { cx, <li>{n}<sup>"2"</sup> " is " {n * n}</li> })
-            .collect::<Vec<_>>()
+            .collect_view(cx)
     };
 
     view! { cx,
