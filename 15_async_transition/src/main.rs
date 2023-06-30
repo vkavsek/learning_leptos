@@ -14,7 +14,7 @@ async fn important_api_call(id: usize) -> String {
 
 #[component]
 fn App(cx: Scope) -> impl IntoView {
-    let (tab, set_tab) = create_signal(cx, 0);
+    let (tab, set_tab) = create_signal(cx, 4);
 
     // this will reload every time `tab` changes
     let user_data = create_resource(cx, tab, |tab| async move { important_api_call(tab).await });
@@ -59,5 +59,5 @@ fn App(cx: Scope) -> impl IntoView {
 }
 
 fn main() {
-    leptos::mount_to_body(|cx| view! { cx, <App/> })
+    mount_to_body(|cx| view! { cx, <App/> })
 }

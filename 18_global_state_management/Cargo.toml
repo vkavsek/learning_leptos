@@ -1,11 +1,9 @@
 [package]
-name = "actions"
+name = "glob_stat_management"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-gloo-timers = { version = "0.2.6", features = ["futures"] }
-leptos = "0.3.1"
-uuid = { version = "1.4.0", features = ["v4", "js"] }
+leptos = { version = "0.3" }
