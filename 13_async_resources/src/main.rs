@@ -22,7 +22,7 @@ fn App(cx: Scope) -> impl IntoView {
         count,
         // the second is the loader
         // it takes the source signal's value as its argument
-        // and does some async work
+        // and does some async work. every time the count changes this will run.
         |value| async move { load_data(value).await },
     );
     // whenever the source signal changes, the loader reloads
