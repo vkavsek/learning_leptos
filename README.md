@@ -1,4 +1,4 @@
-### Personal repo used to learn Leptos.
+### Personal repo used to learn Leptos
 
 With Rust installed as per their website instructions, you also need:
 - cargo install --locked trunk
