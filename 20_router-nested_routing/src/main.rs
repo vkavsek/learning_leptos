@@ -65,7 +65,6 @@ fn ContactList(cx: Scope) -> impl IntoView {
                 <A href="bob">"Bob"</A>
                 <A href="steve">"Steve"</A>
             </div>
-
             // <Outlet/> will show the nested child route
             // we can position this outlet wherever we want
             // within the layout
