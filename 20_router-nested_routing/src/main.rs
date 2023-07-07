@@ -26,18 +26,19 @@ fn App(cx: Scope) -> impl IntoView {
                         path="/contacts"
                         view=|cx| view! { cx, <ContactList/> }
                     >
-                        // if no id specified, fall back
+                        // /contacts/:id also has nested routes
                         <Route path=":id" view=|cx| view! { cx,
                             <ContactInfo/>
                         }>
-                            <Route path="" view=|cx| view! { cx,
-                                <div class="tab">
-                                    "(Contact Info)"
-                                </div>
-                            }/>
                             <Route path="conversations" view=|cx| view! { cx,
                                 <div class="tab">
                                     "(Conversations)"
+                                </div>
+                            }/>
+                            // if no conversations specified, fall back
+                            <Route path="" view=|cx| view! { cx,
+                                <div class="tab">
+                                    "(Contact Info)"
                                 </div>
                             }/>
                         </Route>
