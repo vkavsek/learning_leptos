@@ -25,8 +25,8 @@ pub fn Cd(cx: Scope, initial_value: i32) -> impl IntoView {
     }
 }
 
-#[component]
 /// Quick basic Leptos structure explanation
+#[component]
 pub fn SimpleCounter(cx: Scope, initial_value: i32) -> impl IntoView {
     // create a reactive signal with the initial value
     let (value, set_value) = create_signal(cx, initial_value);

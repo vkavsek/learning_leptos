@@ -1,7 +1,6 @@
 use leptos::*;
 
 fn main() {
-    let a = vec!{1, 2, 3};
     mount_to_body(|cx| view! { cx, <App/> })
 }
 
