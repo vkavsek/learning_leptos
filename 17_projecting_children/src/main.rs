@@ -56,7 +56,7 @@ where
 
 /// You may need to project owned props through a function that takes ChildrenFn and therefore needs to be called more than once.
 /// In this case, you may find the clone: helper in the view macro helpful.
-/// It's captured through multiple leveles of chzildren that need to run more than once, and there's no obvious way to clone it into the children.
+/// It's captured through multiple leveles of children that need to run more than once, and there's no obvious way to clone it into the children.
 /// In this case, the `clone:` syntax comes in handy. Calling `clone:name` will clone name before moving it into `<Inner/>`'s  children,
 /// which solves our ownership issue.
 #[component]
@@ -104,6 +104,8 @@ fn get_rand() -> u64 {
 
 fn main() {
     mount_to_body(|cx| {
-        view! { cx, <SecondDemo/> }
+        view! { cx, 
+            <FirstDemo/>
+            <SecondDemo/> }
     });
 }
