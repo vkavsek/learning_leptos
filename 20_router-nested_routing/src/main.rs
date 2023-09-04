@@ -6,7 +6,7 @@ fn App(cx: Scope) -> impl IntoView {
     view! { cx,
         <Router>
             <h1>"Contact App"</h1>
-            // this <nav> will show on every routes,
+            // this <nav> will show on every route,
             // because it's outside the <Routes/>
             // note: we can just use normal <a> tags
             // and the router will use client-side navigation
